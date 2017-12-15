@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Send</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="https://static.bimface.com/api/BimfaceSDKLoader/BimfaceSDKLoader@latest-release.js"
+            charset="utf-8"></script>
+</head>
+<body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div id="main-content" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="name">What is your name?</label>
+                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
+                </div>
+                <button id="send" class="btn btn-default" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>模型</th>
+                </tr>
+                <tbody id="greetings">
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div id="view3d" class="col-md-12" style="height:800px"></div>
+</div>
+
+<script>
+    $(function () {
+        $.get("file/detail?fileId=1111458383478976", function (response) {
+            var viewToken = response.data.viewToken
+            var options = new BimfaceSDKLoaderConfig();
+            options.viewToken = viewToken;
+            BimfaceSDKLoader.load(options, successCallback, failureCallback);
+
+            function successCallback(viewMetaData) {
+
+                sendConnect();
+
+                if (viewMetaData.viewType == "dwgView") {
+
+                    // ======== 判断是否为2D图纸 ========
+
+                    // 获取DOM元素
+                    var dom4Show = document.getElementById('view3d');
+                    var webAppConfig = new Glodon.Bimface.Application.WebApplication2DConfig();
+                    webAppConfig.domElement = dom4Show;
+
+                    // 创建WebApplication
+                    var app = new Glodon.Bimface.Application.WebApplication2D(webAppConfig);
+
+                    // 添加待显示的图纸
+                    app.load(viewToken);
+
+                    // 从WebApplication获取viewer2D对象
+                    window.viewer2D = app.getViewer();
+
+                    // 调用viewer2D对象的Method，可以继续扩展功能
+                    // your code
+                    setInterval(send2DStatus, 300)
+                } else if (viewMetaData.viewType == "3DView") {
+                    // 获取DOM元素
+                    var dom4Show = document.getElementById('view3d');
+                    var webAppConfig = new Glodon.Bimface.Application.WebApplication3DConfig();
+                    webAppConfig.domElement = dom4Show;
+
+                    // 创建WebApplication
+                    window.app = new Glodon.Bimface.Application.WebApplication3D(webAppConfig);
+
+                    // 添加待显示的模型
+                    app.addView(viewToken);
+
+                    // 监听添加view完成的事件
+                    app.addEventListener(Glodon.Bimface.Application.WebApplication3DEvent.ViewAdded, function () {
+
+                        // 渲染3D模型
+                        app.render();
+
+                        // 从WebApplication获取viewer3D对象
+                        window.viewer3D = app.getViewer();
+
+                        setInterval(sendCameraStatus, 300)
+                    });
+                }
+            }
+            function failureCallback(error) {
+                console.log(error);
+            }
+        })
+
+        $( "#send" ).click(function() { sendFile(); });
+    });
+
+    function sendConnect() {
+        var socket = new WebSocket("ws://"+window.location.host+"/websocket");
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function () {
+            stompClient.subscribe('/message/1', function (message) {
+                $("#greetings").append("<tr><td>" + message.body + "</td></tr>");
+            });
+        });
+    }
+
+    function sendCameraStatus() {
+        stompClient.send("/cameraStatus", {}, JSON.stringify(window.viewer3D.getCameraStatus()));
+    }
+
+    function send2DStatus() {
+        stompClient.send("/cameraStatus", {}, JSON.stringify(window.viewer2D.getCurrentState()));
+    }
+
+    function sendMessage() {
+        stompClient.send("/message", {},  $("#name").val());
+    }
+
+    function sendFile() {
+        stompClient.send("/file", {},  $("#name").val());
+    }
+</script>
+</body>
+</html>

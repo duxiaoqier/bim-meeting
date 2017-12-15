@@ -1,0 +1,263 @@
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.clearfix {
+  zoom: 1;
+}
+.clearfix:after {
+  content: ' ';
+  display: block;
+  height: 0;
+  clear: both;
+}
+.button {
+  background: #00C489;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+li {
+  cursor: pointer;
+}
+textarea {
+  resize: none;
+  overflow: scroll;
+  overflow-x: hidden;
+  outline: 1px solid #CCC;
+}
+.main-wrapper {
+  margin: 50px auto 0;
+  width: 1600px;
+  border: 1px solid #CCC;
+}
+.main-wrapper .header-wrapper {
+  background: #199ED8;
+  height: 60px;
+  padding: 0px 10px;
+}
+.main-wrapper .header-wrapper span {
+  line-height: 60px;
+}
+.main-wrapper .header-wrapper .user-avatar {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 20px;
+  line-height: 40px;
+  font-size: 15px;
+  text-align: center;
+  margin: 10px;
+}
+.main-wrapper .content-wrapper .list-header {
+  background: #515151;
+  height: 50px;
+  padding: 0px 10px;
+  color: white;
+}
+.main-wrapper .content-wrapper .list-header span {
+  line-height: 50px;
+}
+.main-wrapper .content-wrapper .left-panel {
+  width: 280px;
+  height: 800px;
+}
+.main-wrapper .content-wrapper .left-panel .file-list {
+  height: 680px;
+}
+.main-wrapper .content-wrapper .left-panel ul {
+  width: 100%;
+}
+.main-wrapper .content-wrapper .left-panel ul li {
+  background: #E4E4E4;
+  height: 40px;
+  border-bottom: 1px solid white;
+  line-height: 40px;
+  padding: 0px 10px;
+}
+.main-wrapper .content-wrapper .left-panel .button {
+  font-size: 14px;
+  margin: 10px;
+  height: 40px;
+  line-height: 40px;
+}
+.main-wrapper .content-wrapper #model-panel {
+  width: 1018px;
+  height: 800px;
+}
+.main-wrapper .content-wrapper .right-panel {
+  width: 300px;
+  height: 800px;
+}
+.main-wrapper .content-wrapper .right-panel .attendee-list {
+  height: 300px;
+}
+.main-wrapper .content-wrapper .right-panel .attendee-list ul {
+  width: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.main-wrapper .content-wrapper .right-panel .attendee-list ul li {
+  background: #E4E4E4;
+  height: 40px;
+  border-bottom: 1px solid white;
+  line-height: 40px;
+  padding: 0px 10px;
+}
+.main-wrapper .content-wrapper .right-panel .message-panel textarea {
+  width: 280px;
+  height: 390px;
+  padding: 10px;
+  margin: 10px 10px 5px 10px;
+}
+.main-wrapper .content-wrapper .right-panel .message-panel .submit-message textarea {
+  width: 210px;
+  height: 70px;
+  margin: 5px 5px 10px 10px;
+}
+.main-wrapper .content-wrapper .right-panel .message-panel .submit-message .button {
+  width: 60px;
+  margin: 5px 10px 5px 5px;
+  height: 70px;
+  font-size: 20px;
+  line-height: 70px;
+}
+@charset "utf-8";
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+textarea,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video,
+hr {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+html {
+  -webkit-text-size-adjust: none;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #eff4f5;
+}
+img {
+  outline: none;
+  vertical-align: middle;
+}
+ul {
+  list-style: none;
+}
+a {
+  color: #2c8ba2;
+  text-decoration: none;
+  outline: none;
+}
+a:hover {
+  color: #FA5A5A;
+}
+table {
+  border-collapse: collapse;
+}
+input,
+select {
+  border: 0 none;
+  vertical-align: middle;
+  outline: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.clearfix:after {
+  content: ' ';
+  display: block;
+  height: 0;
+  clear: both;
+}
+.clearfix {
+  zoom: 1;
+}
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjc3MvbWVldGluZy5jc3MiLCJzb3VyY2VSb290IjoiIn0=*/
